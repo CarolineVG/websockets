@@ -1,5 +1,8 @@
 // maak connectie browser naar primus 
 var url = "/";
+var value1 = 0;
+var value2 = 0;
+var total = 0; 
 var primus = Primus.connect(url, {
     reconnect: {
         max: Infinity // Number: The max delay before we try to reconnect.
@@ -10,4 +13,30 @@ var primus = Primus.connect(url, {
 
 primus.on('data', function message(data) {
     alert('client met primus verbonden'); 
+    percent(data); 
+    e.preventDefault();
 });
+
+document.getElementById("a1").addEventListener("click", function (e) {
+    primus.write("a"); 
+    e.preventDefault();
+});
+
+document.getElementById("a2").addEventListener("click", function (e) {
+    primus.write("b"); 
+});
+
+function calculate(answer) {
+
+    total += 1;
+
+    if (answer == "a") {
+        value1 += 1;
+    } else if (answer == "b") {
+        value2 += 1;
+    }
+
+    /* laat procent zien */
+    document.getElementById("procent1").innerHTML = Math.round((value1 / total) * 100).toFixed(0);
+    document.getElementById("procent2").innerHTML = Math.round((value2 / total) * 100).toFixed(0);
+}
