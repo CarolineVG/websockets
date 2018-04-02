@@ -17,13 +17,16 @@ primus.on('data', function message(data) {
     e.preventDefault();
 });
 
-document.getElementById("a1").addEventListener("click", function (e) {
+document.querySelector(".a1").addEventListener("click", function (e) {
+    console.log("a1 clicked"); 
     primus.write("a"); 
     e.preventDefault();
 });
 
-document.getElementById("a2").addEventListener("click", function (e) {
+document.querySelector(".a2").addEventListener("click", function (e) {
+    console.log("a2 clicked"); 
     primus.write("b"); 
+    e.preventDefault();
 });
 
 function calculate(answer) {
