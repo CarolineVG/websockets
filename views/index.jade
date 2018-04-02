@@ -1,5 +1,16 @@
 extends layout
 
 block content
-  h1= title
-  p.klik Welcome to #{title}
+  .wrapper
+    .box.a
+      h1= question
+    .box
+      p.a1= answer1
+        br
+        span#procent1 0
+        |  %
+    .box
+      p.a2= answer2
+        br
+        span#procent2 0
+        |  %

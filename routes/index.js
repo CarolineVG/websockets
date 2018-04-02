@@ -5,7 +5,7 @@ var question, answer1, answer2;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Home', question: question, answer1: answer1, answer2: answer2});
 });
 
 /* GET createpoll page. */
