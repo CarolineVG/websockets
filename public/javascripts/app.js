@@ -12,8 +12,8 @@ var primus = Primus.connect(url, {
 });
 
 primus.on('data', function message(data) {
-    alert('client met primus verbonden'); 
-    percent(data); 
+    //alert('client met primus verbonden'); 
+    calculate(data); 
     e.preventDefault();
 });
 
