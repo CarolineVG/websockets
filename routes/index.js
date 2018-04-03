@@ -15,6 +15,26 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Home', question: question, answer1: answer1, answer2: answer2});
 });
 
+/* GET get page + data */
+router.get('/get', function (req, res, next) {
+  // connect to database
+  mongo.connect(url, function (err, db) {
+    // check if no errors
+    assert.equal(null, err);
+    // get items back
+    var cursor = db.db('test').collection('user-data').find(); // find() -> all entries in this collection
+    // run through all entries 
+    cursor.forEach(function (doc, err) {
+      assert.equal(null, err);
+      console.log(doc);
+    }, function () {
+      // callback -> after: close db, render get page with item resultarray 
+      db.close();
+      res.render('get');
+    });
+  });
+});
+
 /* GET createpoll page. */
 router.get('/createpoll', function(req, res, next) {
   res.render('createpoll', { title: 'Create Poll' });
@@ -42,6 +62,7 @@ router.post('/insert', function (req, res, next) {
     answer1: req.body.answer1,
     answer2: req.body.answer2
   };
+
   // connect to mongo db
   mongo.connect(url, function (err, db) {
     assert.equal(null, err);
@@ -50,10 +71,11 @@ router.post('/insert', function (req, res, next) {
       // callback (if no errors)
       assert.equal(null, err);
       console.log('Item inserted');
-      console.log(item); 
+      //console.log(item); 
       db.close();
     });
   });
+
   // redirect to home page
   res.redirect('/');
 });
