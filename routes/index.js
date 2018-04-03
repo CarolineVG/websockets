@@ -21,16 +21,17 @@ router.get('/get', function (req, res, next) {
   mongo.connect(url, function (err, db) {
     // check if no errors
     assert.equal(null, err);
-    // get items back
-    var cursor = db.db('test').collection('user-data').find(); // find() -> all entries in this collection
+    // get last item back 
+    var cursor = db.db('kweeni').collection('questions').find();
     // run through all entries 
     cursor.forEach(function (doc, err) {
       assert.equal(null, err);
-      console.log(doc);
+      console.log('--- Get items ---');
+      console.log(doc); 
     }, function () {
       // callback -> after: close db, render get page with item resultarray 
       db.close();
-      res.render('get');
+      res.redirect('/');
     });
   });
 });
@@ -70,8 +71,8 @@ router.post('/insert', function (req, res, next) {
     db.db('kweeni').collection('questions').insertOne(item, function (err, result) {
       // callback (if no errors)
       assert.equal(null, err);
-      console.log('Item inserted');
-      //console.log(item); 
+      console.log('--- Item inserted ---');
+      console.log(item); 
       db.close();
     });
   });
