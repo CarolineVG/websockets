@@ -17,21 +17,24 @@ router.get('/', function(req, res, next) {
 
 /* GET get page + data */
 router.get('/get', function (req, res, next) {
+  // global var for item
+  var item; 
   // connect to database
   mongo.connect(url, function (err, db) {
     // check if no errors
     assert.equal(null, err);
     // get last item back 
-    var cursor = db.db('kweeni').collection('questions').find();
+    var cursor = db.db('kweeni').collection('questions').find().sort({$natural:-1}).limit(1);
     // run through all entries 
     cursor.forEach(function (doc, err) {
       assert.equal(null, err);
       console.log('--- Get items ---');
       console.log(doc); 
+      item = doc; 
     }, function () {
-      // callback -> after: close db, render get page with item resultarray 
+      // callback -> after: close db, render get page with item
       db.close();
-      res.redirect('/');
+      res.render('get', { title: 'Home', question: item.question, answer1: item.answer1, answer2: item.answer2});
     });
   });
 });
