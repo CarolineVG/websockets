@@ -1,5 +1,12 @@
 var express = require('express');
 var router = express.Router();
+
+/* require mongo */
+var mongo = require('mongodb');
+var assert = require('assert');
+
+var url = 'mongodb://localhost:27017/test'; // run mongo terminal, read 2nd line  + /databasename
+
 /* variabelen die doorgegeven moeten worden */
 var question, answer1, answer2;
 
