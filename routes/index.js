@@ -5,14 +5,15 @@ var router = express.Router();
 var mongo = require('mongodb');
 var assert = require('assert');
 
-var url = 'mongodb://localhost:27017/kweeni'; // run mongo terminal, read 2nd line  + /databasename
-
+// local host
+//var url = 'mongodb://localhost:27017/kweeni'; // run mongo terminal, read 2nd line  + /databasename
+var online = 'mongodb+srv://Admin:4dm!n@gettingstarted-jbvu6.mongodb.net/kweeni'; 
 /* GET home page + data */
 router.get('/', function (req, res, next) {
   // global var for item
   var item; 
   // connect to database
-  mongo.connect(url, function (err, db) {
+  mongo.connect(online, function (err, db) {
     // check if no errors
     assert.equal(null, err);
     // get last item back 
@@ -46,7 +47,7 @@ router.get('/createpoll', function(req, res, next) {
     };
 
     // connect to mongo db
-    mongo.connect(url, function (err, db) {
+    mongo.connect(online, function (err, db) {
       assert.equal(null, err);
       // access database, use collection to insert item 
       db.db('kweeni').collection('questions').insertOne(item, function (err, result) {
