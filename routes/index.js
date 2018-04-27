@@ -5,19 +5,26 @@ var router = express.Router();
 var mongo = require('mongodb');
 var assert = require('assert');
 
+
 // local host
 //var url = 'mongodb://localhost:27017/kweeni'; // run mongo terminal, read 2nd line  + /databasename
-var online = 'mongodb+srv://Admin:4dm!n@gettingstarted-jbvu6.mongodb.net/kweeni'; 
+var online = "mongodb://admin:4dm!n@clustersockets-shard-00-00-xihhg.mongodb.net:27017,clustersockets-shard-00-01-xihhg.mongodb.net:27017,clustersockets-shard-00-02-xihhg.mongodb.net:27017/test?ssl=true&replicaSet=ClusterSockets-shard-0&authSource=admin";
+
+
 /* GET home page + data */
 router.get('/', function (req, res, next) {
+
   // global var for item
   var item; 
   // connect to database
   mongo.connect(online, function (err, db) {
     // check if no errors
-    assert.equal(null, err);
+    //assert.equal(null, err);
+    // get database
+    var dbo = db.db("dbsockets"); 
     // get last item back 
-    var cursor = db.db('kweeni').collection('questions').find().sort({$natural:-1}).limit(1);
+    var cursor = dbo.collection("questions").find().sort({$natural:-1}).limit(1);
+    console.log(cursor); 
     // run through all entries 
     cursor.forEach(function (doc, err) {
       assert.equal(null, err);
@@ -50,7 +57,7 @@ router.get('/createpoll', function(req, res, next) {
     mongo.connect(online, function (err, db) {
       assert.equal(null, err);
       // access database, use collection to insert item 
-      db.db('kweeni').collection('questions').insertOne(item, function (err, result) {
+      db.db('dbsockets').collection('questions').insertOne(item, function (err, result) {
         // callback (if no errors)
         assert.equal(null, err);
         console.log('--- Item inserted ---');
