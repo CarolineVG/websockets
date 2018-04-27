@@ -1,0 +1,16 @@
+extends layout
+
+block content
+    h2=title
+    table.table
+        thead
+            tr
+            th(scope='col') Question
+            th(scope='col') Answer 1
+            th(scope='col') Answer 2
+        tbody
+            each q, i in list
+                tr
+                td=list.question
+                td=list.answer1
+                td=list.answer2
